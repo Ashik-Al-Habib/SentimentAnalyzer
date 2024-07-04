@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Product</title>
+</head>
+<body>
+    <h1>Search Product by ID</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+
+    {% if results is not None %}
+        <h2>Search Results</h2>
+        <table border="1">
+            <tr>
+                <th>Score</th>
+                <th>Product ID</th>
+                <th>Label</th>
+                <th>Review</th>
+            </tr>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.score }}</td>
+                    <td>{{ result.product_id }}</td>
+                    <td>{{ result.label }}</td>
+                    <td>{{ result.review }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% if not results %}
+            <p>No results found.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

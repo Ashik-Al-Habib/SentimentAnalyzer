@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="logo">
+            <img src="{% static 'logo.png' %}" alt="Logo"> Group 16 - Learners
+        </a>
+    </div>
+    <div class="search-container">
+        <h1>Sentiment Analysis for Product</h1>
+        <form method="post" id="sentiment-form">
+            {% csrf_token %}
+            <div class="form-row">
+                {{ form.product_id.label_tag }} {{ form.product_id }}
+                {{ form.algorithm.label_tag }} {{ form.algorithm }}
+                <button type="submit" id="analyze-button">
+                    Analyze
+                    <span class="button-spinner" id="button-spinner" style="display: none;"></span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% if result %}
+        {% if result.error %}
+            <p>{{ result.error }}</p>
+        {% else %}
+            <div class="summary-section">
+                <h3>Overall Sentiment : {{ result.overall_sentiment }}</h3>
+                <h3>Selected Algorithm : {{ form.algorithm.value }}</h3>
+                <h3>Accuracy : {{ result.accuracy }}</h3>
+
+                <h2>Top 4 Words</h2>
+                <div class="labels-container">
+                    {% for word in result.top_4_words %}
+                        <div class="label"><h2>{{ word }}</h2></div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="word-cloud-section">
+        {% if good_wordcloud_base64 %}
+            <div class="good-reviews">
+                <h2>Good Reviews Word Cloud</h2>
+                <img src="{{ good_wordcloud_base64 }}" alt="Good Reviews Word Cloud" class="word-cloud-image">
+            </div>
+        {% endif %}
+
+        {% if bad_wordcloud_base64 %}
+            <div class="bad-reviews">
+                <h2>Bad Reviews Word Cloud</h2>
+                <img src="{{ bad_wordcloud_base64 }}" alt="Bad Reviews Word Cloud" class="word-cloud-image">
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('sentiment-form').addEventListener('submit', function() {
+            var button = document.getElementById('analyze-button');
+            var spinner = document.getElementById('button-spinner');
+
+            button.classList.add('loading');
+            spinner.style.display = 'inline-block';
+        });
+    </script>
+</body>
+</html>

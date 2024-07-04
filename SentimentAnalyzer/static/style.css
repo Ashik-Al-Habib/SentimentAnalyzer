@@ -1,0 +1,196 @@
+* {
+    font-family: 'Clash Display', cursive;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.12);
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a.logo {
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #0F172A;
+}
+
+.navbar .logo img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    margin-right: 20px;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+}
+
+.search-container {
+    margin: 120px 20px 40px;
+}
+
+
+.form-row {
+    display: flex;
+    align-items: center;
+}
+
+.form-row > * {
+    margin-right: 20px;
+}
+
+.search-container label,
+#product-id option {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+#product-id, #algorithm {
+    font-size: 16px;
+    font-weight: 400;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    background-color: #4ADE80;
+    color: #0F172A;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+}
+
+.search-container button .button-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.summary-section,
+.good-section,
+.word-cloud-section {
+    margin: 20px 0;
+}
+
+.good-section,
+.good-reviews {
+    padding: 20px;
+    background-color: lightgray;
+    color: white;
+}
+
+.bad-reviews {
+    padding: 20px;
+    background-color: #0F172A;
+    color: white;
+}
+
+.word-cloud-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.good-reviews,
+.bad-reviews {
+    background-color: #E2E8F0;
+    border-radius: 20px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+    width: calc(50% - 10px);
+    height: 440px;
+    margin-right: 20px;
+    overflow: hidden;
+}
+
+.bad-reviews {
+    margin-right: 0;
+}
+
+.good-reviews h2,
+.bad-reviews h2 {
+    background-color: #4ADE80;
+    color: #0F172A;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+.bad-reviews h2 {
+    background-color: #ffbaba;
+    color: #0F172A;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+}
+
+.word-cloud-image {
+    border-radius: 8px;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.12);
+    max-width: 100%;
+}
+
+.labels-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align items vertically */
+    margin-top: 20px;
+}
+
+.label {
+    width: 350px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #ade8f4;
+    display: flex;
+    align-items: center; /* Vertically center text */
+    justify-content: center; /* Horizontally center text */
+    margin-right: 20px; /* Equal horizontal distribution */
+    text-align: center;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.label:last-child {
+    margin-right: 0;
+}
+
+.label h2 {
+    color: #0F172A;
+    font-size: 22px;
+    font-weight: 500; /* Medium font weight */
+}
