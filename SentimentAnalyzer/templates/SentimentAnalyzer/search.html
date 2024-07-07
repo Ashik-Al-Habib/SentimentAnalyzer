@@ -1,37 +1,183 @@
+{#{% load static %}#}
+{#<!DOCTYPE html>#}
+{#<html lang="">#}
+{#<head>#}
+{#    <title>Sentiment Analysis</title>#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">#}
+{#</head>#}
+{#<body>#}
+{#    <div class="navbar">#}
+{#        <a href="#" class="logo">#}
+{#            <img src="{% static 'logo.png' %}" alt="Logo"> Group 16 - Learners#}
+{#        </a>#}
+{#    </div>#}
+{#    <div class="search-container">#}
+{#        <h1>Sentiment Analysis for Product</h1>#}
+{#        <form method="post" id="sentiment-form">#}
+{#            {% csrf_token %}#}
+{#            <div class="form-row">#}
+{#                {{ form.product_id.label_tag }}#}
+{#                <select name="product_id" id="product-id">#}
+{#                    {% for product in product_counts %}#}
+{#                        <option value="{{ product.product_id }}">#}
+{#                            Product ID: {{ product.product_id }} - Good Adjectives: {{ product.good_count }} - Bad Adjectives: {{ product.bad_count }}#}
+{#                        </option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+{#                {{ form.algorithm.label_tag }} {{ form.algorithm }}#}
+{#                <button type="submit" id="analyze-button">#}
+{#                    Analyze#}
+{#                    <span class="button-spinner" id="button-spinner" style="display: none;"></span>#}
+{#                </button>#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{##}
+{#    {% if results %}#}
+{#        <div class="results">#}
+{#            <h2>Search Results</h2>#}
+{#            <ul>#}
+{#                {% for result in results %}#}
+{#                    <li>{{ result.product_id }} - {{ result.review }}</li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+{#    {% endif %}#}
+{##}
+{#    <script>#}
+{#        document.getElementById('sentiment-form').addEventListener('submit', function() {#}
+{#            var button = document.getElementById('analyze-button');#}
+{#            var spinner = document.getElementById('button-spinner');#}
+{##}
+{#            button.classList.add('loading');#}
+{#            spinner.style.display = 'inline-block';#}
+{#        });#}
+{#    </script>#}
+{#</body>#}
+{#</html>#}
+
+
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Search Product</title>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <style>
+        /* Additional styles for search.html */
+        body {
+            font-family: 'Clash Display', cursive; /* Ensure consistent font */
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #0F172A; /* Adjust link color */
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a.logo {
+            font-size: 1.5em;
+            font-weight: 500;
+            color: #0F172A; /* Adjust logo text color */
+        }
+
+        .navbar .logo img {
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            margin-right: 20px;
+        }
+
+        .search-container {
+            margin: 120px 20px 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .total-count {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #0F172A;
+        }
+    </style>
 </head>
 <body>
-    <h1>Search Product by ID</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Search</button>
-    </form>
+    <div class="navbar">
+        <a href="#" class="logo">
+            <img src="{% static 'logo.png' %}" alt="Logo"> Group 16 - Learners
+        </a>
+    </div>
 
-    {% if results is not None %}
-        <h2>Search Results</h2>
-        <table border="1">
-            <tr>
-                <th>Score</th>
-                <th>Product ID</th>
-                <th>Label</th>
-                <th>Review</th>
-            </tr>
-            {% for result in results %}
+    <div class="search-container">
+        <h1>Product List</h1>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ result.score }}</td>
-                    <td>{{ result.product_id }}</td>
-                    <td>{{ result.label }}</td>
-                    <td>{{ result.review }}</td>
+                    <th>Product ID</th>
+                    <th>Total Reviews</th>
+                    <!-- Uncomment if needed: <th>Good Adjectives Count</th> -->
+                    <!-- Uncomment if needed: <th>Bad Adjectives Count</th> -->
                 </tr>
-            {% endfor %}
+            </thead>
+            <tbody>
+                {% for product in product_counts %}
+                    <tr>
+                        <td>{{ product.product_id }}</td>
+                        <td>{{ product.total_reviews }}</td>
+                        <!-- Uncomment if needed: <td>{{ product.good_count }}</td> -->
+                        <!-- Uncomment if needed: <td>{{ product.bad_count }}</td> -->
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
-        {% if not results %}
-            <p>No results found.</p>
-        {% endif %}
-    {% endif %}
+
+        <div class="total-count">
+            Total Product IDs: {{ product_counts|length }}
+        </div>
+    </div>
+
+    <!-- Your existing scripts or additional scripts if needed -->
+
 </body>
 </html>
+
+
+
+

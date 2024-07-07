@@ -20,16 +20,23 @@ from collections import Counter
 
 nltk.download('punkt')
 
+from django.shortcuts import render
+from django.db.models import Count, Q
+from .models import ProductReview
+from .forms import ProductSearchForm
+
 
 def search_product(request):
-    form = ProductSearchForm()
-    results = None
-    if request.method == 'POST':
-        form = ProductSearchForm(request.POST)
-        if form.is_valid():
-            product_id = form.cleaned_data['product_id']
-            results = ProductReview.objects.filter(product_id=product_id)
-    return render(request, 'SentimentAnalyzer/search.html', {'form': form, 'results': results})
+    # Fetch product IDs with total review count, good adj count, and bad adj count
+    product_counts = ProductReview.objects.values('product_id').annotate(
+        total_reviews=Count('review'),
+        good_count=Count('review', filter=Q(review__icontains='good')),
+        bad_count=Count('review', filter=Q(review__icontains='bad'))
+    ).filter(total_reviews__gte=500).order_by('-total_reviews')
+
+    return render(request, 'SentimentAnalyzer/search.html', {
+        'product_counts': product_counts
+    })
 
 
 def analyze_product_reviews(product_id, algorithm):
@@ -71,9 +78,19 @@ def analyze_product_reviews(product_id, algorithm):
             good_adjectives.append(adj)
         elif sentiment['compound'] < 0:
             bad_adjectives.append(adj)
+
+    # Debug statements
+    print(f"Good adjectives: {good_adjectives}")
+    print(f"Bad adjectives: {bad_adjectives}")
+
     # Determine overall sentiment based on counts
     good_count = len(good_adjectives)
     bad_count = len(bad_adjectives)
+
+    # Debug statements
+    print(f"Good count: {good_count}")
+    print(f"Bad count: {bad_count}")
+
     if good_count > bad_count:
         overall_sentiment = "Good"
     elif bad_count > good_count:
@@ -142,4 +159,3 @@ def sentiment_analysis(request):
         'good_wordcloud_base64': good_wordcloud_base64,
         'bad_wordcloud_base64': bad_wordcloud_base64,
     })
-
