@@ -13,6 +13,13 @@
     </div>
     <div class="search-container">
         <h1>Sentiment Analysis for Product</h1>
+        <div class="go-to-sentiment">
+                <a href="{% url 'search_product' %}">
+                    <button type="button" id="go-to-sentiment-button">
+                        Search Product ID
+                    </button>
+                </a>
+        </div>
         <form method="post" id="sentiment-form">
             {% csrf_token %}
             <div class="form-row">

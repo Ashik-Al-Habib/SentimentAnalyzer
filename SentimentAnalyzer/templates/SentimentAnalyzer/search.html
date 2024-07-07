@@ -67,7 +67,9 @@
     <style>
         /* Additional styles for search.html */
         body {
-            font-family: 'Clash Display', cursive; /* Ensure consistent font */
+            font-family: 'Clash Display', cursive;
+            margin: 0;
+            padding: 0;
         }
 
         .navbar {
@@ -92,7 +94,7 @@
         .navbar a.logo {
             font-size: 1.5em;
             font-weight: 500;
-            color: #0F172A; /* Adjust logo text color */
+            color: #0F172A;
         }
 
         .navbar .logo img {
@@ -104,6 +106,48 @@
 
         .search-container {
             margin: 120px 20px 40px;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .button-container h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #0F172A;
+        }
+
+        .go-to-sentiment {
+            margin-left: 20px;
+        }
+
+        .go-to-sentiment button {
+            padding: 10px 20px;
+            background-color: #4ADE80;
+            color: #0F172A;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 400;
+            position: relative;
+        }
+
+        .go-to-sentiment button:hover {
+            background-color: #45CC77;
+        }
+
+        .go-to-sentiment .button-spinner {
+            display: none;
+        }
+
+        .go-to-sentiment button.loading {
+            pointer-events: none;
+            opacity: 0.6;
         }
 
         table {
@@ -146,14 +190,25 @@
     </div>
 
     <div class="search-container">
-        <h1>Product List</h1>
+        <div class="button-container">
+            <h1>Product List</h1>
+            <div class="go-to-sentiment">
+                <a href="{% url 'sentiment_analysis' %}">
+                    <button type="button" id="go-to-sentiment-button">
+                        Go to Sentiment Analysis
+                        <span class="button-spinner" id="button-spinner" style="display: none;"></span>
+                    </button>
+                </a>
+            </div>
+        </div>
+
         <table>
             <thead>
                 <tr>
                     <th>Product ID</th>
                     <th>Total Reviews</th>
-                    <!-- Uncomment if needed: <th>Good Adjectives Count</th> -->
-                    <!-- Uncomment if needed: <th>Bad Adjectives Count</th> -->
+                    <!-- <th>Good Adjectives Count</th> -->
+                    <!-- <th>Bad Adjectives Count</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -161,8 +216,8 @@
                     <tr>
                         <td>{{ product.product_id }}</td>
                         <td>{{ product.total_reviews }}</td>
-                        <!-- Uncomment if needed: <td>{{ product.good_count }}</td> -->
-                        <!-- Uncomment if needed: <td>{{ product.bad_count }}</td> -->
+                        <!-- <td>{{ product.good_count }}</td> -->
+                        <!-- <td>{{ product.bad_count }}</td> -->
                     </tr>
                 {% endfor %}
             </tbody>
@@ -173,10 +228,11 @@
         </div>
     </div>
 
-    <!-- Your existing scripts or additional scripts if needed -->
 
 </body>
 </html>
+
+
 
 
 
