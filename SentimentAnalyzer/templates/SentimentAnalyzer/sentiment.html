@@ -40,7 +40,7 @@
             <div class="summary-section">
                 <h3>Overall Sentiment : {{ result.overall_sentiment }}</h3>
 {#                <h3>Selected Algorithm : {{ form.algorithm.value }}</h3>#}
-                <h3>Accuracy : {{ result.accuracy }}</h3>
+                <h3>Accuracy : {{ result.accuracy|floatformat:2 }}%</h3>
 
                 <h2>Top 4 Words</h2>
                 <div class="labels-container">

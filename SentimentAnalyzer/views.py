@@ -50,7 +50,7 @@ def analyze_product_reviews(product_id, algorithm):
     model = joblib.load(model_path + f'{algorithm}.h5')
 
     # Dummy accuracy value; replace this with the actual method to get model accuracy
-    accuracy = model.accuracy if hasattr(model, 'accuracy') else 0.0
+    accuracy = model.accuracy * 100
 
     # Convert to DataFrame
     reviews_df = pd.DataFrame(list(reviews.values()))
