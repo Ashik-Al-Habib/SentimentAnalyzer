@@ -1,9 +1,66 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Sentiment Analysis</title>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <style>
+        .summary-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .summary-box {
+            background-color: #E2E8F0;
+            border-radius: 8px;
+            padding: 20px;
+            width: 45%;
+            text-align: center;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        .summary-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .summary-content {
+            font-size: 24px;
+            font-weight: 400;
+        }
+        .summary-content.good {
+            color: #4BB543;
+        }
+        .summary-content.bad {
+            color: #ff0e0e;
+        }
+        .top-words-box {
+            background-color: #E2E8F0;
+            border-radius: 8px;
+            padding: 20px;
+            width: 95%;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        .top-words-title {
+            font-weight: 600;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .top-words-content {
+            font-weight: 400;
+            font-size: 24px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .top-word {
+            background-color: #ade8f4;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 0 10px;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -14,11 +71,11 @@
     <div class="search-container">
         <h1>Sentiment Analysis for Product</h1>
         <div class="go-to-sentiment">
-                <a href="{% url 'search_product' %}">
-                    <button type="button" id="go-to-sentiment-button">
-                        Search Product ID
-                    </button>
-                </a>
+            <a href="{% url 'search_product' %}">
+                <button type="button" id="go-to-sentiment-button">
+                    Search Product ID
+                </button>
+            </a>
         </div>
         <form method="post" id="sentiment-form">
             {% csrf_token %}
@@ -38,22 +95,25 @@
             <p>{{ result.error }}</p>
         {% else %}
             <div class="summary-section">
-                <h3>Overall Sentiment :
-                    {% if result.overall_sentiment == "Good" %}
-                        <span style="color: #4BB543;">{{ result.overall_sentiment }}</span>
-                    {% elif result.overall_sentiment == "Bad" %}
-                        <span style="color: #ff0e0e;">{{ result.overall_sentiment }}</span>
-                    {% else %}
+                <div class="summary-box">
+                    <div class="summary-title">Overall Sentiment</div>
+                    <div class="summary-content {% if result.overall_sentiment == 'Good' %}good{% elif result.overall_sentiment == 'Bad' %}bad{% endif %}">
                         {{ result.overall_sentiment }}
-                    {% endif %}
-                </h3>
-{#                <h3>Selected Algorithm : {{ form.algorithm.value }}</h3>#}
-                <h3>Accuracy : <span style="color: #4BB543;">{{ result.accuracy|floatformat:2 }}%</span></h3>
+                    </div>
+                </div>
+                <div class="summary-box">
+                    <div class="summary-title">Accuracy</div>
+                    <div class="summary-content good">
+                        {{ result.accuracy|floatformat:2 }}%
+                    </div>
+                </div>
+            </div>
 
-                <h2>Top 4 Words</h2>
-                <div class="labels-container">
+            <div class="top-words-box">
+                <div class="top-words-title">Top 4 Words</div>
+                <div class="top-words-content">
                     {% for word in result.top_4_words %}
-                        <div class="label"><h2>{{ word }}</h2></div>
+                        <div class="top-word">{{ word }}</div>
                     {% endfor %}
                 </div>
             </div>
@@ -61,17 +121,17 @@
     {% endif %}
 
     <div class="word-cloud-section">
-        {% if good_wordcloud_base64 %}
+        {% if result.good_wordcloud_base64 %}
             <div class="good-reviews">
                 <h2>Good Reviews Word Cloud</h2>
-                <img src="{{ good_wordcloud_base64 }}" alt="Good Reviews Word Cloud" class="word-cloud-image">
+                <img src="{{ result.good_wordcloud_base64 }}" alt="Good Reviews Word Cloud" class="word-cloud-image">
             </div>
         {% endif %}
 
-        {% if bad_wordcloud_base64 %}
+        {% if result.bad_wordcloud_base64 %}
             <div class="bad-reviews">
                 <h2>Bad Reviews Word Cloud</h2>
-                <img src="{{ bad_wordcloud_base64 }}" alt="Bad Reviews Word Cloud" class="word-cloud-image">
+                <img src="{{ result.bad_wordcloud_base64 }}" alt="Bad Reviews Word Cloud" class="word-cloud-image">
             </div>
         {% endif %}
     </div>
