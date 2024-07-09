@@ -103,8 +103,12 @@ def analyze_product_reviews(product_id, algorithm):
     bad_wordcloud_base64 = generate_word_cloud(bad_adjectives, f"Bad Adjectives for Product ID: {product_id}")
 
     # Extract top 4 words from good adjectives
-    word_freq = Counter(good_adjectives)
-    top_4_words = [word for word, freq in word_freq.most_common(4)]
+    if good_count > bad_count:
+        word_freq = Counter(good_adjectives)
+        top_4_words = [word for word, freq in word_freq.most_common(4)]
+    else:
+        word_freq = Counter(bad_adjectives)
+        top_4_words = [word for word, freq in word_freq.most_common(4)]
 
     return {
         'product_id': product_id,

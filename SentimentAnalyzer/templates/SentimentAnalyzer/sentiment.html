@@ -79,7 +79,7 @@
         </a>
     </div>
     <div class="search-container">
-        <h1>Sentiment Analysis for Product</h1>
+        <h1 style="font-weight: 500; text-align: center">Sentiment Analysis for Product</h1>
         <div class="go-to-sentiment">
             <a href="{% url 'search_product' %}">
                 <button type="button" id="go-to-sentiment-button">
@@ -120,7 +120,7 @@
             </div>
 
             <div class="top-words-box">
-                <div class="top-words-title">Top 4 Words</div>
+                <div class="top-words-title">Descriptive Words</div>
                 <div class="top-words-content">
                     {% for word in result.top_4_words %}
                         <div class="top-word">{{ word }}</div>
