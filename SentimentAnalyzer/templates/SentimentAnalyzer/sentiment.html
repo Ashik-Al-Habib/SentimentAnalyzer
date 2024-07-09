@@ -38,7 +38,15 @@
             <p>{{ result.error }}</p>
         {% else %}
             <div class="summary-section">
-                <h3>Overall Sentiment : <span style="color: #4BB543;">{{ result.overall_sentiment }}</span></h3>
+                <h3>Overall Sentiment :
+                    {% if result.overall_sentiment == "Good" %}
+                        <span style="color: #4BB543;">{{ result.overall_sentiment }}</span>
+                    {% elif result.overall_sentiment == "Bad" %}
+                        <span style="color: #ff0e0e;">{{ result.overall_sentiment }}</span>
+                    {% else %}
+                        {{ result.overall_sentiment }}
+                    {% endif %}
+                </h3>
 {#                <h3>Selected Algorithm : {{ form.algorithm.value }}</h3>#}
                 <h3>Accuracy : <span style="color: #4BB543;">{{ result.accuracy|floatformat:2 }}%</span></h3>
 
