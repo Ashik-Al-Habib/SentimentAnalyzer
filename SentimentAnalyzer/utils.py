@@ -12,7 +12,7 @@ nltk.download('punkt')
 
 
 # Load the dataset
-df = pd.read_csv("/Users/ashikalhabib/Desktop/test/merger.csv")
+df = pd.read_csv("/Users/ashikalhabib/Desktop/test/merger_v2.csv")
 
 
 def analyze_product_reviews(product_id):

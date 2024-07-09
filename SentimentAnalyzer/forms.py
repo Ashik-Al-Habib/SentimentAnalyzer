@@ -11,7 +11,7 @@ PRODUCT_IDS = [
     ("B0066AZGD4", "8th Most Reviews - B0066AZGD4"),
     ("B00H5BMH44", "9th Most Reviews - B00H5BMH44"),
     ("B0091JL3OI", "Least Reviews - B0091JL3OI"),
-    # ("B017THJLZG", "Bad Product - B017THJLZG"),
+    ("B091GXRYWU", "Bad Product - B091GXRYWU"),
 ]
 
 ALGORITHMS = [

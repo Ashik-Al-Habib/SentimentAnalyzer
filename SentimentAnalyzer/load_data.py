@@ -6,7 +6,7 @@ from SentimentAnalyzer.models import ProductReview
 
 def load_csv_data(csv_file_path):
 
-    csv_file_path = 'C:\\Users\\cu16b\\Downloads\\Pre-Processing\\merger.csv'
+    csv_file_path = '/Users/ashikalhabib/Desktop/test/merger_v2.csv'
     if os.path.exists(csv_file_path):
         print("File exists")
     else:
@@ -26,5 +26,5 @@ if __name__ == "__main__":
     import django
     django.setup()
 
-    csv_file_path = r'C:\Users\cu16b\Downloads\Pre-Processing\merger.csv'
+    csv_file_path = r'/Users/ashikalhabib/Desktop/test/merger_v2.csv'
     load_csv_data(csv_file_path)
