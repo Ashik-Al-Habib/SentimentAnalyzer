@@ -43,7 +43,7 @@ def analyze_product_reviews(product_id, algorithm):
     # Filter the reviews based on product ID
     reviews = ProductReview.objects.filter(product_id=product_id)
     if not reviews.exists():
-        return {"error": f"No reviews found for product ID: {product_id}"}
+        return {"error": f"No reviews found for Product ID: {product_id}"}
 
     # loading the model
     model_path = '/Users/ashikalhabib/Desktop/test/'

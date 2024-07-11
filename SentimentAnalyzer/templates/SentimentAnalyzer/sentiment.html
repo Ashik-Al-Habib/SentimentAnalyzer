@@ -70,6 +70,13 @@
             display: block;
             margin: 0 auto;
         }
+        .error-message {
+            color: #ff0e0e;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -83,7 +90,7 @@
         <div class="go-to-sentiment">
             <a href="{% url 'search_product' %}">
                 <button type="button" id="go-to-sentiment-button">
-                    Search Product ID
+                    See All Product IDs
                 </button>
             </a>
         </div>
@@ -102,7 +109,7 @@
 
     {% if result %}
         {% if result.error %}
-            <p>{{ result.error }}</p>
+            <p class="error-message">{{ result.error }}</p>
         {% else %}
             <div class="summary-section">
                 <div class="summary-box">
